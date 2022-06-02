@@ -6,10 +6,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
+    <style>
+        .cardbox {
+            transition: all .2s ease-in-out;
+        }
+
+        .cardbox:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +35,8 @@
                 <h4 class="mt-2">Search City:</h4>
                 <!-- mb(margin top in BS) -->
                 <div class="input-group mb-3">
-                    <input type="text" id="city" class="form-control" placeholder="Enter City Here" aria-label="Enter City Here">
+                    <input type="text" id="city" class="form-control" placeholder="Enter City Here"
+                        aria-label="Enter City Here">
                     <div class="input-group-append">
                         <button class="btn btn-info mb-3" type="button" id="search">
                             <i class="fas fa-search"></i>
