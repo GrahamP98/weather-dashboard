@@ -8,9 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <title>Weather Dashboard</title>
     <style>
+        * {
+            font-family: "Bebas Neue", sans-serif;
+
+        }
         .cardbox {
             transition: all .2s ease-in-out;
         }
@@ -22,8 +27,8 @@
 </head>
 
 <body>
-    <header class="jumbotron jumbotron-fluid text-container">
-        <h1 id="title" class="bg-dark text-light">
+    <header class="jumbotron bg-primary text-center jumbotron-fluid text-container">
+        <h1 id="title" class="text-light">
             Weather Dashboard
         </h1>
     </header>
@@ -49,7 +54,7 @@
             <section class="col-lg-9">
                 <div class="row mr-0">
                     <!--  d-none hides the element -->
-                    <div class="col-lg-11 m-3 d-none card" id="today-weather">
+                    <div class="col-lg-11 m-3 d-none text-center rounded bg-primary text-light" id="today-weather">
                         <div class="card-body">
                             <h3 id="city-name" class="city-name align-middle"></h3>
                             <img id="R-pic" alt="">
