@@ -12,39 +12,19 @@ function init() {
     const histEl = document.getElementById("history");
     var rweatherEl = document.getElementById("today-weather");
     var fiveEl = document.getElementById("fiveday");
+    var title = document.getElementById("title");
     let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-    console.log(searchHistory);
 
 
     const APIKey = "894f693d596b9da3794a39bff8c376ca";
 
-    //     fetch('https://api.openweathermap.org/geo/1.0/direct?q=Charlotte&limit=1&appid=894f693d596b9da3794a39bff8c376ca')
-    //         .then(function (response) {
-    //             return response.json();
-    //         })
-    //         .then(function (data) {
-    //             console.log(data[0].lat, data[0].lon);
-    //             getWeatherData(data[0].lat, data[0].lon);
-    //         });
-    // }
-
-    // function getWeatherData(lat, lon) {
-    //     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=894f693d596b9da3794a39bff8c376ca&units=imperial`)
-    //         .then(function (response) {
-    //             return response.json();
-    //         })
-    //         .then(function (data) {
-    //             console.log();
-    //             console.log(data);
-    //         });
     function receiveWeather(cityName) {
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey; //+ "&units=imperial";
         axios.get(queryURL)  
         .then(function(response){
-            console.log(response.data)
 
             rweatherEl.classList.remove("d-none")
-            
+            var Kityname = response.data.name;
             const rDate = new Date(response.data.dt*1000);
             const day = rDate.getDate();
             const month = rDate.getMonth();
@@ -64,6 +44,8 @@ function init() {
             .then(function (response) {
                 let UVIndex = document.createElement("span");
 
+                title.innerHTML = Kityname;
+
                 if (response.data[0].value < 4 ) {
                     UVIndex.setAttribute("class", "badge badge-success");
                 }
@@ -73,7 +55,6 @@ function init() {
                 else {
                     UVIndex.setAttribute("class", "badge badge-danger");
                 }
-                console.log(response.data[0].value)
                 UVIndex.innerHTML = response.data[0].value;
                 rUVEl.innerHTML ="UV Index: ";
                 rUVEl.append(UVIndex);
