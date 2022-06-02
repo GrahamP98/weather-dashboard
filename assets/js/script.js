@@ -38,9 +38,12 @@ function init() {
     //             console.log(data);
     //         });
     function receiveWeather(cityName) {
-        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
+        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey; //+ "&units=imperial";
         axios.get(queryURL)  
         .then(function(response){
+            console.log(response.data)
+
+            rweatherEl.classList.remove("d-none")
             
             const rDate = new Date(response.data.dt*1000);
             const day = rDate.getDate();
@@ -50,9 +53,9 @@ function init() {
             let weatherPic = response.data.weather[0].icon;
             rPicEl.setAttribute("src","https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
             rPicEl.setAttribute("alt",response.data.weather[0].description);
-            rTempEl.innerHTML = "Temperature: " + response.data.min.temp;
-            rHumEl.innerHTML = "Humidity: " + response.data.main.humidity;
-            rWindEl.innerHTML = "Wind Speed: " + response.data.wind.speed; 
+            rTempEl.innerHTML = "Temperature: " + k2f(response.data.main.temp) + " &#176F";
+            rHumEl.innerHTML = "Humidity: " + response.data.main.humidity + "%";
+            rWindEl.innerHTML = "Wind Speed: " + response.data.wind.speed + " MPH"; 
             
             let lat = response.data.coord.lat;
             let lon = response.data.coord.lon;
@@ -70,8 +73,84 @@ function init() {
                 else {
                     UVIndex.setAttribute("class", "badge badge-danger");
                 }
+                console.log(response.data[0].value)
+                UVIndex.innerHTML = response.data[0].value;
+                rUVEl.innerHTML ="UV Index: ";
+                rUVEl.append(UVIndex);
+            });
+
+            let cityID = response.data.id;
+            let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" +APIKey;
+            axios.get(forecastQueryURL)
+            .then(function (response) {
+                fiveEl.classList.remove("d-none");
+
+                const forecastEl = document.querySelectorAll(".forecast");
+                for (i = 0; i < forecastEl.length; i++) {
+                    forecastEl[i].innerHTML = "";
+                    const forecastIndex = i * 8 + 4;
+                    const forecastDate = new Date(response.data.list[forecastIndex].dt * 1000);
+                    const forecastDay = forecastDate.getDate();
+                    const forecastMonth = forecastDate.getMonth();
+                    const forecastYear = forecastDate.getFullYear();
+                    const forecastDateEl = document.createElement("p");
+                    forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
+                    forecastDateEl.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
+                    forecastEl[i].append(forecastDateEl);
+
+                    const forecastWeatherEl = document.createElement("img");
+                    forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png");
+                    forecastWeatherEl.setAttribute("alt", response.data.list[forecastIndex].weather[0].description);
+                    forecastEl[i].append(forecastWeatherEl);
+                    const forecastTempEl = document.createElement("p");
+                    forecastTempEl.innerHTML = "Temp: " + k2f(response.data.list[forecastIndex].main.temp) + " &#176";
+                    forecastEl[i].append(forecastDateEl);
+                    const forecastHumidityEl = document.createElement("p");
+                    forecastHumidityEl.innerHTML = "Humidity: " + response.data.list[forecastIndex].main.humidity + "%";
+                    forecastEl[i].append(forecastHumidityEl);
+                }
             })
-        }) 
+        });
     }
+
+    searchEl.addEventListener("click", function () {
+        const searchTerm = cityEl.value;
+        receiveWeather(searchTerm);
+        searchHistory.push(searchTerm);
+        localStorage.setItem("search", JSON.stringify(searchHistory));
+        loadSearchHistory();
+    })
+
+    clearEl.addEventListener("click", function () {
+        localStorage.clear();
+        searchHistory = [];
+        loadSearchHistory();
+    })
+
+    function k2f(K) {
+        return Math.floor((K - 273.15) * 1.8 + 32);
+    }
+
+    function loadSearchHistory() {
+        histEl.innerHTML = "";
+        for (let i = 0; i < searchHistory.length; i++) {
+            const histElItem = document.createElement("input");
+            histElItem.setAttribute("type", "text");
+            histElItem.setAttribute("readonly", true);
+            histElItem.setAttribute("class", "form-control d-block");
+            histElItem.setAttribute("value", searchHistory[i]);
+            histElItem.addEventListener("click", function () {
+                receiveWeather(histElItem.value);
+            })
+            histEl.append(histElItem);
+        }
+    }
+
+    loadSearchHistory();
+    if (searchHistory.length > 0) {
+        receiveWeather(searchHistory[searchHistory.length - 1]);
+    }
+
 }
+    
     init();
