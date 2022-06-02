@@ -46,4 +46,4 @@ type city name in the "enter city here" section. click the blue button (magnifyi
 [Repository](https://github.com/GrahamP98/weather-dashboard)
 
 ## Bugs
-1. N/A (put found bugs here)
+1. uv index doesnt appear on 5 day forecast

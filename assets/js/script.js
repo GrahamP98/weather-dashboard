@@ -85,6 +85,11 @@ function init() {
                             forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
                             forecastDateEl.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
                             forecastEl[i].append(forecastDateEl);
+                            // ! //
+                            // let lat = response.data.coord.lat;
+                            // let lon = response.data.coord.lon;
+                            // let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
+                            // ! //
                             //determines image for current weather
                             const forecastWeatherEl = document.createElement("img");
                             forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png");
@@ -99,6 +104,11 @@ function init() {
                             const forecastWindspeedEl = document.createElement("p");
                             forecastWindspeedEl.innerHTML = "Wind Speed: " + response.data.list[forecastIndex].wind.speed + " MPH";
                             forecastEl[i].append(forecastWindspeedEl);
+                            // ! //
+                            // const forecastUVIndexEl = document.createElement("p");
+                            // forecastUVIndexEl.innerHTML = "UV Index: " + response.data[forecastIndex].value;
+                            // forecastEl[i].append(forecastUVIndexEl);
+                            // ! //
                         }
                     })
             });
