@@ -19,7 +19,12 @@
     <style>
         * {
             font-family: "Bebas Neue", sans-serif;
+        }
 
+        body {
+            background-size: cover;
+            background-repeat: repeat-y;
+            background-image: url(https://images.unsplash.com/photo-1597200381847-30ec200eeb9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80);
         }
 
         .cardbox {
@@ -37,6 +42,7 @@
         <h1 id="title" class="text-light">
             Weather Dashboard
         </h1>
+        <span id="clock"></span>
     </header>
 
     <main class="container-fluid">
@@ -63,21 +69,22 @@
                 <div class="row mr-0">
                     <!--  d-none hides the element -->
                     <div class="col-lg-11 m-3 d-none text-center rounded bg-primary text-light" id="today-weather">
-                        <div class="card-body">
+                        <section class="card-body">
                             <h3 id="city-name" class="city-name align-middle"></h3>
                             <img id="R-pic" alt="">
                             <p id="temperature"></p>
                             <p id="UV-index"></p>
                             <p id="humidity"></p>
                             <p id="wind-speed"></p>
-                        </div>
+                        </section>
                     </div>
                 </div>
                 <div class="row d-none" id="fiveday">
                     <div class="col-12">
-                        <h3>5 Day Forecast</h3>
+                        <h3 class="text-center text-light five"><u>5 Day Forecast</u></h3>
                     </div>
                 </div>
+                <!-- 5 day forecast cards -->
                 <div class="row">
                     <div class="col-md-2 forecast bg-info text-light rounded m-2 cardbox"></div>
                     <div class="col-md-2 forecast bg-info text-light rounded m-2 cardbox"></div>
@@ -88,7 +95,7 @@
             </section>
         </section>
     </main>
-
+    <!-- all scripts -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

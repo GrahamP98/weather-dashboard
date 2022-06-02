@@ -1,3 +1,4 @@
+//live clock and uv index for cards isnt working
 function init() {
     // const are constants so they dont change, var are variables so they do change and these are declared globally, let limits the scope to a block statement or expression that its used with.
     const cityEl = document.getElementById("city");
@@ -18,7 +19,12 @@ function init() {
     // api key given by openweathermap.org
     const APIKey = "894f693d596b9da3794a39bff8c376ca";
 
-    // leverages the one call api from openweathermap.org and moment.js to input the current cooresponding data 
+    // using moment.js to display time as a live clock
+    window.setInterval (function () {
+        $('#clock').html(moment().format('dddd MM/DD/YYYY H:mm:ss'))
+    }, 1000);
+
+    // leverages the one call api from openweathermap.org to input the current cooresponding data 
     function receiveWeather(cityName) {
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
         axios.get(queryURL)
@@ -40,6 +46,7 @@ function init() {
                 rTempEl.innerHTML = "Temperature: " + response.data.main.temp + " &#176F";
                 rHumEl.innerHTML = "Humidity: " + response.data.main.humidity + "%";
                 rWindEl.innerHTML = "Wind Speed: " + response.data.wind.speed + " MPH";
+                
 
                 // get request for UV index
                 let lat = response.data.coord.lat;
@@ -85,12 +92,6 @@ function init() {
                             forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
                             forecastDateEl.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
                             forecastEl[i].append(forecastDateEl);
-                            // ! //
-                            // let lat = response.data.coord.lat;
-                            // let lon = response.data.coord.lon;
-                            // let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
-                            // ! //
-                            //determines image for current weather
                             const forecastWeatherEl = document.createElement("img");
                             forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png");
                             forecastWeatherEl.setAttribute("alt", response.data.list[forecastIndex].weather[0].description);
@@ -104,11 +105,6 @@ function init() {
                             const forecastWindspeedEl = document.createElement("p");
                             forecastWindspeedEl.innerHTML = "Wind Speed: " + response.data.list[forecastIndex].wind.speed + " MPH";
                             forecastEl[i].append(forecastWindspeedEl);
-                            // ! //
-                            // const forecastUVIndexEl = document.createElement("p");
-                            // forecastUVIndexEl.innerHTML = "UV Index: " + response.data[forecastIndex].value;
-                            // forecastEl[i].append(forecastUVIndexEl);
-                            // ! //
                         }
                     })
             });
